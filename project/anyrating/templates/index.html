@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% load static%}
+{% block content %}
+	<header class="bg-dark py-5">
+        <div class="container px-5">
+            <div class="row gx-5 align-items-center justify-content-center">
+                <div class="col-lg-8 col-xl-7 col-xxl-6">
+                    <div class="text-center text-xl-start">
+                        <h1 class="display-5 fw-bolder text-white mb-2">A Rating Platform with Social Utilities</h1>
+                        <p class="lead fw-normal text-white-50 mb-4">AnyRating, where rating meets social networking. Share reviews, connect with peers, and find recommendations effortlessly. Engage with a vibrant community to make informed decisions across various categories.</p>
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                            <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{% url 'index' %}#features">Get Started</a>
+                            <a class="btn btn-success btn-lg px-4" href="{% url 'signup' %}">Sign Up Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
+                	<img class="img-fluid rounded-3 my-5" src="{% static 'images/LOGO.png' %}" alt="An intro image for AnyRating" style="width: 500px; height: 400px;">
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="py-5" id="features">
+    	<div class="container"> 
+            <div class="row d-flex justify-content-center mb-2">
+                <div class="col-6">
+                    <div class="row g-3 row-cols-md-2 row-cols-lg-4 mb-3">
+                        <div class="col"><a href="{% url 'index' %}#features"><button class="btn btn-lg btn-secondary" style="width: 150px;">All</button></a></div>
+                        <div class="col"><a href="{% url 'index' 'Book' %}#features"><button class="btn btn-lg btn-secondary" style="width: 150px;">Books</button></a></div>
+                        <div class="col"><a href="{% url 'index' 'Movie' %}#features"><button class="btn btn-lg btn-secondary" style="width: 150px;">Movies</button></a></div>
+                        <div class="col"><a href="{% url 'index' 'Restaurant' %}#features"><button class="btn btn-lg btn-secondary" style="width: 150px;">Restaurants</button></a></div>
+                    </div>
+                </div>
+            </div>
+            <form action="#features" method="post">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            <div class="row d-flex justify-content-center">
+                <dir class="col-8">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="friend_only" value="yes">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Friend Only</label>
+                    </div>
+                </dir>
+            </div>
+            {% endif %}
+            <div class="row d-flex justify-content-center">
+                <div class="col-8">
+                    <div class="input-group">
+                        <input type="search" class="form-control rounded bg-light bg-gradient" placeholder="Please enter the keywords" aria-label="Search" aria-describedby="search-addon" name="keyword"/>
+                        <button type="submit" class="btn btn-success btn-lg" data-mdb-ripple-init name="search">search</button>  
+                    </div>
+                </div>
+            </div>
+            </form>
+            {% if notFound %}
+            <script type="text/javascript">
+                alert('There is no corresponding search result.\nTry create a new one.');
+            </script>
+            {% endif %}
+    	</div>
+        <div class="container mt-5 d-flex justify-content-around">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    {% if user.is_authenticated %}
+                    <a class="text-decoration-none text-reset" href="{% url 'post' %}">
+                        <div class="card h-100 shadow border-secondary">
+                            <img src="{% static 'images/add.png' %}" class="card-img-top mt-4" alt="create a new post" style="width: 100%;">
+                            <div class="card-body text-secondary">
+                                <p class="card-text text-center fs-4">Click here to create a new post</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <a class="text-decoration-none text-reset" href="{% url 'login' %}">
+                        <div class="card h-100 shadow border-secondary">
+                            <img src="{% static 'images/add.png' %}" class="card-img-top mt-4" alt="create a new post" style="width: 100%;">
+                            <div class="card-body text-secondary">
+                                <p class="card-text text-center fs-4">Click here to create a new post</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                </div>
+                {% for comment in comments %}
+                    {% if friend == 1 %}
+                    {% if comment.dummy in profile.follows.all %}
+                    <div class="col">
+                        <div class="card h-100 shadow border-secondary">
+                            <img class="card-img-top" src="{{comment.image.url}}" style="width: 100%; height: 250px;">
+                            <div class="card-body mb-0 pb-0">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{comment.category}}</div>
+                            </div>
+                            <div class="card-header fw-bold fs-5">{{comment.title}}</div>
+                            <div class="card-body p-4">
+                                <p class="card-text mb-0">{{comment.content}}</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <div class="d-flex align-items-end justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                        <div class="small">
+                                            <div class="fw-bold">
+                                                <a href="{% url 'profile' comment.author%}" class="text-decoration-none text-reset">
+                                                    {{comment.author}}
+                                                </a>
+                                            </div>
+                                            <div class="text-muted">posted on {{comment.pub_date|date:"F d, Y"}}</div>
+                                        </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <div class="d-flex align-items-end justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div class="small">
+                                            <p class="card-text mb-0 fs-5">Rating: 
+                                                {% if comment.rating == 1 %}
+                                                ⭐
+                                                {% elif comment.rating == 2 %}
+                                                ⭐⭐
+                                                {% elif comment.rating == 3 %}
+                                                ⭐⭐⭐
+                                                {% elif comment.rating == 4 %}
+                                                ⭐⭐⭐⭐
+                                                {% elif comment.rating == 5 %}
+                                                ⭐⭐⭐⭐⭐
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <div class="col">
+                        <div class="card h-100 shadow border-secondary">
+                            <img class="card-img-top" src="{{comment.image.url}}" style="width: 100%; height: 250px;">
+                            <div class="card-body mb-0 pb-0">
+                                <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{comment.category}}</div>
+                            </div>
+                            <div class="card-header fw-bold fs-5">{{comment.title}}</div>
+                            <div class="card-body p-4">
+                                <p class="card-text mb-0">{{comment.content}}</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <div class="d-flex align-items-end justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                        <div class="small">
+                                            <div class="fw-bold">
+                                                <a href="{% url 'profile' comment.author%}" class="text-decoration-none text-reset">
+                                                    {{comment.author}}
+                                                </a>
+                                            </div>
+                                            <div class="text-muted">posted on {{comment.pub_date|date:"F d, Y"}}</div>
+                                        </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <div class="d-flex align-items-end justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <div class="small">
+                                            <p class="card-text mb-0 fs-5">Rating: 
+                                                {% if comment.rating == 1 %}
+                                                ⭐
+                                                {% elif comment.rating == 2 %}
+                                                ⭐⭐
+                                                {% elif comment.rating == 3 %}
+                                                ⭐⭐⭐
+                                                {% elif comment.rating == 4 %}
+                                                ⭐⭐⭐⭐
+                                                {% elif comment.rating == 5 %}
+                                                ⭐⭐⭐⭐⭐
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

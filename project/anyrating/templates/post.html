@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}
+	<title>Anyrating-Post</title>
+{% endblock %}
+
+{% block content %}
+	<h2 class="text-center fs-2 mt-3 mb-3">💬發佈評論</h2>
+    <div align="center">
+        <form class="comment_form" action="{% url 'post' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+            	<!-- {{ form.author }} -->
+            	<input type="hidden" name="author" value={{user.username}}>
+            </fieldset>
+            <fieldset>
+            	<label for="title" class="fs-5">Title:</label><br>
+            	<!-- {{ form.title }} -->
+            	<input type="text" class="mb-2" id="title" name="title" required>
+            </fieldset>
+            <fieldset>
+            	<label for="category" class="fs-5">Category:</label><br>
+            	<select name="category" id="category" class="mb-2">
+            		<option value="Book">Book</option>
+            		<option value="Movie">Movie</option>
+            		<option value="Restaurant">Restaurant</option>
+            	</select>
+            	<!-- {{ form.category }} -->
+            </fieldset>
+            <fieldset>
+            	<label for="image" class="fs-5">Image:</label><br>
+            	<input type="file" class="mb-2" accept="image/*" id="image" name="image" required>
+            	<!-- {{ form.image }} -->
+            </fieldset>
+            <fieldset>
+                <label class="fs-5" for="comment">Comment:</label><br>
+                <textarea class="comment_textarea mb-2" id="comment" name="comment" required></textarea>
+                <!-- {{ form.content }} -->
+            </fieldset>
+            <fieldset>
+            	<label class="fs-5" for="rating">Rating:</label><br>
+            	<input type="range" class="mb-2" id="rating" name="rating" min="1" max="5" required>
+            	<!-- {{ form.rating }} -->
+            </fieldset>
+
+            <input class="comment_btn comment_submit" type="submit" value="送出" name="submit">
+            <input class="comment_btn comment_reset" type="reset" value="重新輸入" name="reset">
+        </form>
+    </div>
+    <hr>
+{% endblock %}

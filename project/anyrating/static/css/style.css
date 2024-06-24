@@ -1,0 +1,61 @@
+.comment_form {
+  max-width: 600px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.comment_form:invalid .comment_btn {
+  opacity: 0.5;
+  background-color: gray;
+}
+
+.comment_textarea {
+  box-sizing: border-box;
+  width: 100%;
+  font-family: monospace;
+}
+
+.comment_btn {
+  margin: 10px;
+  width: 100px;
+  height: 5ex;
+  border: 3px solid rgba(50, 36, 172, 0.448);
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.comment_submit {
+  background-color: darkgreen;
+}
+
+.comment_reset {
+  background-color: darkred;
+}
+
+.comment_submit:hover {
+  background-color: green;
+}
+
+.comment_reset:hover {
+  background-color: red;
+}
+.login-form-font {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.login-form-outer-border {
+  border: 0.2em solid #0e9aac; 
+  padding: 10px; 
+  width: 25%; 
+  margin: 0 auto; 
+}
+
+.login-form-border {
+  border: 0.1em solid #205297; 
+  padding: 10px; 
+  width: 90%; 
+  margin: 0 auto; 
+}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>AnyRating-Login</title>
+{% endblock %}
+   
+{% load static %}
+{% block content %}
+
+    <div align="center">    
+        <img src="{% static 'images/login2.png' %}" alt="Login Image" width="100" height="100">
+        <h3 class="fs-3">Please log in</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="login-form-outer-border">
+                <div class="login-form-border">
+                    <div class = 'login-form-font'>
+                    {{ form.as_p }}
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+        </form>
+    </div>
+
+
+{% endblock %}

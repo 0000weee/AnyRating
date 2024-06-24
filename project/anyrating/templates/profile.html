@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% load static%}
+{% block title %}
+  <title>AnyRating-Profile</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <div class="row">
+        <div class="col">
+          <!-- User profile picture -->
+          <img src ="{% static 'images/3.jpg' %}" class="rounded-circle img-fluid" style="width: 150px; height: 200px;">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <form action="" method="post">
+            {% csrf_token %}
+            {% if cur_user_profile in profile.follows.all %}
+              {% if cur_user == user %}
+              <button class="btn btn-success" disabled>Follow</button>
+              <button class="btn btn-danger" disabled>Unfollow</button>
+              {% else %}
+              <button class="btn btn-success" disabled>Follow</button>
+              <button class="btn btn-danger" name="follow" value="unfollow">Unfollow</button>
+              {% endif %}
+            {% else %}
+              <button class="btn btn-success" name="follow" value="follow">Follow</button>
+              <button class="btn btn-danger" disabled>Unfollow</button>
+            {% endif %}
+            </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <!-- User information -->
+      <h2 style = "bg-dark py-5">Account's profile</h2>
+      <p>Name : {{ cur_user.username }}</p>
+      <p>Contact me : shohoku14@uTakyo.edu.tw</p>
+      <p>About me : I'm a basketball player at SHOHOKU, no.14</p>
+      <p>Never give up</p>
+      <p>Writing the comment of basketball-field</p>
+    </div>
+  </div>
+  <hr>
+</div>
+
+<section>
+  <div class="container px-5 my-5">
+    <div class="row gx-5 justify-content-center">
+      <div class="col-lg-8 col-xl-6">
+          <div class="text-center">
+              <h2 class="fw-bolder">My post</h2>
+              <p class="lead fw-normal text-muted mb-5"></p>
+          </div>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for comment in comments %}
+        <div class="col">
+            <div class="card h-100 shadow border-secondary">
+                <img class="card-img-top" src="{{comment.image.url}}" style="width: 100%; height: 250px;">
+                <div class="card-body mb-0 pb-0">
+                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{comment.category}}</div>
+                </div>
+                <div class="card-header fw-bold fs-5">{{comment.title}}</div>
+                <div class="card-body p-4">
+                    <p class="card-text mb-0">{{comment.content}}</p>
+                </div>
+                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                    <div class="d-flex align-items-end justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                            <div class="small">
+                                <div class="fw-bold">
+                                    <a href="{% url 'profile' comment.author%}" class="text-decoration-none text-reset">
+                                        {{comment.author}}
+                                    </a>
+                                </div>
+                                <div class="text-muted">posted on {{comment.pub_date|date:"F d, Y"}}</div>
+                            </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                    <div class="d-flex align-items-end justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="small">
+                                <p class="card-text mb-0 fs-5">Rating: 
+                                    {% if comment.rating == 1 %}
+                                    ⭐
+                                    {% elif comment.rating == 2 %}
+                                    ⭐⭐
+                                    {% elif comment.rating == 3 %}
+                                    ⭐⭐⭐
+                                    {% elif comment.rating == 4 %}
+                                    ⭐⭐⭐⭐
+                                    {% elif comment.rating == 5 %}
+                                    ⭐⭐⭐⭐⭐
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+<!--           <div class="col-lg-4 mb-5">
+            <div class="card h-100 shadow border-0">
+                <img class="card-img-top" src="https://lh6.googleusercontent.com/j8U7l4t6pk39l3yblI80MPMdMFkt8UgpkJQ1i_9uSARUNBQ8TwfLrxktJzXTm9-uuB_vOr4vQl49FWO_fTFH1cMDzDvDVfdtrj7vra4RL6DHcNT6ndD8Q9VDvrrf56H-GHEAX8iniKuYCYNGBbtOmOP6IKDKEoi48yF6fp_AzcmwBZMYMzIsUBnRtA" alt="..." />
+                <div class="card-body p-4">
+                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Sport</div>
+                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">台北新生高架橋</h5></a>
+                    <p class="card-text mb-0">這裡的人還蠻強的，偶爾會有職業選手來打球，高強度的比賽真是令人熱血沸騰。只不過地板有點滑</p>
+                </div>
+                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                    <div class="d-flex align-items-end justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                            <div class="small">
+                                <div class="fw-bold">Kelly Rowan</div>
+                                <div class="text-muted">March 12, 2023 &middot; 6 min read</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+  </div>
+</section>
+{% endblock %}

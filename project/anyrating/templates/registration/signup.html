@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+	<title>AnyRating-Sign-up</title>
+{% endblock %}
+   
+{% load static %}
+{% block content %}
+
+    <div>
+        <h3 class="fs-3">Please sign in</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+{% endblock %}
