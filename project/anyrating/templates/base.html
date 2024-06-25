@@ -30,18 +30,16 @@
             {% else %}
               <li class="nav-item dropdown">
                 <a class="dropdown-toggle nav-link px-lg-3 py-3 py-lg-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Account
+                  Profile
                 </a>
                 <ul class="dropdown-menu">
-                  <button class="dropdown-item"><a class="text-decoration-none text-reset" href="{% url 'profile' user.username %}">My Profile</a></button>
-                  <button class="dropdown-item"><a class="text-decoration-none text-reset" href="{% url 'follows' user.username %}">Follows List</a></button>
-                  <button class="dropdown-item"><a class="text-decoration-none text-reset" href="{% url 'followers' user.username %}">Followers List</a></button>
-                  <button class="dropdown-item"><a class="text-decoration-none text-reset" href="{% url 'password_change' %}">Change Password</a></button>
-                  <button class="dropdown-item"><a class="text-decoration-none text-reset" href="{% url 'password_reset' %}">Reset Password</a></button>
+                  <button class="dropdown-item"><a class="text-decoration-none text-reset" href="{% url 'account' %}">Account</a></button>
                   <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button class="dropdown-item" type="submit">Log out</button>
                   </form>
+                  <button class="dropdown-item"><a class="text-decoration-none text-reset" href="{% url 'password_change' %}">Password Change</a></button>
+                  <button class="dropdown-item"><a class="text-decoration-none text-reset" href="{% url 'password_reset' %}">Password Reset</a></button>
                 </ul>
               </li>
             {% endif %}

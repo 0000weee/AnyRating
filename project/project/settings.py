@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'anyrating.apps.AnyratingConfig',
     "accounts",  # new
-    'upload_profile', # new
 ]
 
 MIDDLEWARE = [
