@@ -1,19 +1,25 @@
 {% extends "base.html" %}
 
 {% block title %}
-	<title>AnyRating-Sign-up</title>
+	<title>AnyRating-Sign up</title>
 {% endblock %}
    
 {% load static %}
 {% block content %}
-
-    <div>
-        <h3 class="fs-3">Please sign in</h3>
+    <h2 class="text-center fs-2 mt-3 mb-3">Please sign up</h2>
+    <div class="text-center">
         <form method="post">
             {% csrf_token %}
-            {{ form }}
-            <button type="submit">Submit</button>
+            <label for="id_username" class="fs-5 mt-2">Username:</label>
+            {{ form.username }}
+            <br>
+            <label for="id_password1" class="fs-5 mt-2">Password:</label>
+            {{ form.password1 }}
+            <br>
+            <label for="id_password2" class="fs-5 mt-2">Password Confirmation:</label>
+            {{ form.password2 }}
+            <br>
+            <input class="comment_btn comment_submit" type="submit" value="Submit" name="submit">
         </form>
     </div>
-
 {% endblock %}

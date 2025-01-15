@@ -29,7 +29,6 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/anyrating/')),
     path("accounts/", include("accounts.urls")),  # new
     path("accounts/", include("django.contrib.auth.urls")),  # new
-    # path("", TemplateView.as_view(template_name="index.html"), name="home"),  # new
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
