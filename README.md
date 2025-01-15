@@ -30,5 +30,4 @@ Username: test
 Password: webapp2024
 ```
 ## Team member
-GUAN-YOU-CHEN
-XIU-WEI-LIANG
+GUAN-YOU-CHEN, XIU-WEI-LIANG
